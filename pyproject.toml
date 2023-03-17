@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "virtual-assistant-chain"
+version = "0.0.0"
+description = ""
+authors = ["al002 <al002@disroot.org>"]
+readme = "README.md"
+packages = [{include = "virtual_assistant_chain"}]
+
+[tool.poetry.dependencies]
+python = "^3.11.2"
+grpcio = "^1.51.3"
+grpcio-tools = "^1.51.3"
+langchain = "^0.0.113"
+
+[tool.poetry.group.dev.dependencies]
+jupyterlab = "^3.6.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
