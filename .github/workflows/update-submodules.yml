@@ -12,6 +12,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         # Fetch all history and submodules
+        token: ${{ secrets.REMOTE_PROTOS_TRIGGER_TOKEN }}
         fetch-depth: 0
         submodules: 'recursive'
 
