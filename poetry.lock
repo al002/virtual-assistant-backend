@@ -1415,14 +1415,14 @@ test = ["codecov", "ipykernel", "jupyterlab-server[openapi]", "openapi-spec-vali
 
 [[package]]
 name = "langchain"
-version = "0.0.113"
+version = "0.0.115"
 description = "Building applications with LLMs through composability"
 category = "main"
 optional = false
 python-versions = ">=3.8.1,<4.0"
 files = [
-    {file = "langchain-0.0.113-py3-none-any.whl", hash = "sha256:9e146d116fd3b9b2210c8c447cabfa20ef27c26ea3f2bc986eab97d1dad0aab6"},
-    {file = "langchain-0.0.113.tar.gz", hash = "sha256:a494fe02bc63da4bcda7da8d7f4a346522fbc87f0a4955b72519ec2ed86bf906"},
+    {file = "langchain-0.0.115-py3-none-any.whl", hash = "sha256:9204b6eeaf7d0c0c92646f33e08adf85166ae071f70f4aa224f9a2c7c5d01745"},
+    {file = "langchain-0.0.115.tar.gz", hash = "sha256:428d4cafe17b195cc5f1bffc45de0103e080f4970d9af6a1f6e297c6b4117a63"},
 ]
 
 [package.dependencies]
@@ -1430,7 +1430,7 @@ aiohttp = ">=3.8.3,<4.0.0"
 dataclasses-json = ">=0.5.7,<0.6.0"
 numpy = ">=1,<2"
 pydantic = ">=1,<2"
-PyYAML = ">=6,<7"
+PyYAML = ">=5.4.1"
 requests = ">=2,<3"
 SQLAlchemy = ">=1,<2"
 tenacity = ">=8.1.0,<9.0.0"
@@ -3000,4 +3000,4 @@ test = ["mypy", "pre-commit", "pytest", "pytest-asyncio", "websockets (>=10.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11.2"
-content-hash = "c4910834864a3201d84a0e15a5716254b34a20f8e1d4eb8a0fab25aaa7a85bc7"
+content-hash = "aba7b10712213a30b84a4ef7642307704806754710bd52f63828e0f5fc9c55bc"

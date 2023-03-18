@@ -10,7 +10,7 @@ packages = [{include = "virtual_assistant_chain"}]
 python = "^3.11.2"
 grpcio = "^1.51.3"
 grpcio-tools = "^1.51.3"
-langchain = "^0.0.113"
+langchain = "^0.0.115"
 
 [tool.poetry.group.dev.dependencies]
 jupyterlab = "^3.6.1"
