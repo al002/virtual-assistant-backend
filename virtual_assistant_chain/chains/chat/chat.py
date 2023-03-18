@@ -10,8 +10,8 @@ from langchain.prompts import (
     HumanMessagePromptTemplate
 )
 
-from virtual_assistant_chain.chat.prompt import SYSTEM_MESSAGE_TEMPLATE, HUMAN_MESSAGE_TEMPLATE
-from virtual_assistant_chain.chat.chat_type_template import TYPE_TEMPLATES
+from virtual_assistant_chain.chains.chat.prompt import SYSTEM_MESSAGE_TEMPLATE, HUMAN_MESSAGE_TEMPLATE
+from virtual_assistant_chain.chains.chat.chat_type_template import TYPE_TEMPLATES
 
 class ChatConversation:
     conversation_chain: ConversationChain
