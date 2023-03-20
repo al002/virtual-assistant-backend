@@ -1,6 +1,8 @@
 from django.urls import path
-from . import views
+from .views import ChatView
+from .views import BashExecutorView
 
 urlpatterns = [
-    path('chat/', views.ChatView.as_view(), name='chat'),
+    path('chat/', ChatView.as_view(), name='chat'),
+    path('bash/executor/', BashExecutorView.as_view(), name='bash')
 ]

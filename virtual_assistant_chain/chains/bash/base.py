@@ -13,18 +13,18 @@ class BashChain:
 
     def create_folder(self, folder_name: str, dest: str = "current directory"):
         input = PromptTemplate.from_template(CREATE_FOLDER_TEMPLATE).format(name=folder_name, dest=dest)
-        self.run(input)
+        return self.run(input)
 
     def create_next_app(self, app_name: str):
         input = PromptTemplate.from_template(CREATE_NEXT_APP_TEMPLATE).format(app_name=app_name)
-        self.run(input)
+        return self.run(input)
 
     def create_python_project(self, app_name: str):
         input = PromptTemplate.from_template(CREATE_POETRY_PYTHON_PROJECT).format(app_name=app_name)
-        self.run(input)
+        return self.run(input)
 
     def run(self, input: str):
-        self.chain.run(input)
+        return self.chain.run(input)
 
 if __name__ == "__main__":
     bash = BashChain()
