@@ -12,6 +12,8 @@ grpcio = "^1.51.3"
 grpcio-tools = "^1.51.3"
 langchain = "^0.0.115"
 openai-whisper = {git = "https://github.com/openai/whisper.git"}
+django = "^4.1.7"
+djangorestframework = "^3.14.0"
 
 [tool.poetry.group.dev.dependencies]
 jupyterlab = "^3.6.1"
