@@ -1,15 +1,15 @@
-# api/views/login.py
-from django.contrib.auth import login
-from django.contrib.auth.forms import AuthenticationForm
-from rest_framework import status
+# views.py
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from django.contrib.auth import authenticate, login
 
 @api_view(['POST'])
 def login_view(request):
-    form = AuthenticationForm(request, data=request.data)
-    if form.is_valid():
-        user = form.get_user()
+    email = request.data.get('email')
+    password = request.data.get('password')
+    user = authenticate(request, username=email, password=password)
+    if user is not None:
         login(request, user)
-        return Response({'detail': '登录成功'}, status=status.HTTP_200_OK)
-    return Response(form.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'success': True})
+    else:
+        return Response({'success': False, 'message': 'Invalid email or password.'})

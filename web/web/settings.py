@@ -132,6 +132,8 @@ AUTH_USER_MODEL = 'api.CustomUser'
 
 ASGI_APPLICATION = 'web.asgi.application'
 
+APPEND_SLASH = False
+
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels.layers.InMemoryChannelLayer',
