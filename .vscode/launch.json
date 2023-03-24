@@ -11,6 +11,18 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "justMyCode": false
+        },
+        {
+            "name": "Django",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/web/manage.py",
+            "args": [
+                "runserver",
+                "--noreload"
+            ],
+            "justMyCode": false,
+            "django": true
         }
     ]
 }

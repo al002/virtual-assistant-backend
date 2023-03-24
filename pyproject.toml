@@ -13,12 +13,13 @@ grpcio-tools = "^1.51.3"
 openai-whisper = {git = "https://github.com/openai/whisper.git"}
 django = "^4.1.7"
 djangorestframework = "^3.14.0"
-langchain = "^0.0.116"
+langchain = "^0.0.121"
 openai = "^0.27.2"
 python-dotenv = "^1.0.0"
 social-auth-app-django = "^5.1.0"
 channels = "^4.0.0"
 daphne = "^4.0.0"
+asgiref = "^3.6.0"
 
 [tool.poetry.group.dev.dependencies]
 jupyterlab = "^3.6.1"
