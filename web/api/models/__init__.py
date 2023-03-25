@@ -1,2 +1,2 @@
-from .chat_history import ChatHistory
-from .user import CustomUser
+from .chat_message import ChatMessage
+from .conversation import Conversation
