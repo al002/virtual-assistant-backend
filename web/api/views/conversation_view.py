@@ -1,5 +1,5 @@
 from rest_framework import generics
-from ..models import Conversation
+from ..models import Conversation, ChatMessage
 from ..serializers import ConversationSerializer
 
 class ConversationListCreateAPIView(generics.ListCreateAPIView):
@@ -16,3 +16,7 @@ class ConversationRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPI
 
     def get_queryset(self):
         return Conversation.objects.filter(user=self.request.user)
+
+    def perform_destroy(self, instance):
+        ChatMessage.objects.filter(user=self.request.user, conversation=instance).delete()
+        instance.delete()
