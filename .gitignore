@@ -8,3 +8,4 @@ build/
 .ipynb_checkpoints
 .DS_Store
 .env
+db.sqlite3

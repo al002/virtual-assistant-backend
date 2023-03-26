@@ -30,9 +30,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
         while True:
             info = await self.queue.get()
             if info['type'] == 'llm_new_token':
-                await self.send(text_data=json.dumps({'conversation_id': conversation_id, 'msg_type': 'reply_new_token', 'reply': info['token']}))
+                await self.send(text_data=json.dumps({'conversation_id': conversation_id, 'msg_type': 'reply_new_token', 'token': info['token']}))
             elif info['type'] == 'llm_end':
-                await self.send(text_data=json.dumps({'conversation_id': conversation_id, 'msg_type': 'reply_end', 'reply': ''}))
+                await self.send(text_data=json.dumps({'conversation_id': conversation_id, 'msg_type': 'reply_end', 'token': ''}))
 
     @database_sync_to_async
     def save_message(self, message: str, reply: str, conversation_id: str):
