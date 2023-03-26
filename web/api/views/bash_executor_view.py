@@ -1,11 +1,9 @@
 from typing import Any
-from django.http import HttpResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-import json
 
-from virtual_assistant_chain.chains.bash.base import BashChain
+from virtual_assistant.chains.bash.base import BashChain
 
 class BashExecutorView(APIView):
     bash_executor: BashChain

@@ -2,7 +2,7 @@ from langchain.chains import LLMBashChain
 from langchain.llms import OpenAI
 from langchain.prompts import PromptTemplate
 
-from virtual_assistant_chain.chains.bash.prompt import CREATE_FOLDER_TEMPLATE, CREATE_NEXT_APP_TEMPLATE, CREATE_POETRY_PYTHON_PROJECT
+from virtual_assistant.chains.bash.prompt import CREATE_FOLDER_TEMPLATE, CREATE_NEXT_APP_TEMPLATE, CREATE_POETRY_PYTHON_PROJECT
 
 class BashChain:
     chain: LLMBashChain

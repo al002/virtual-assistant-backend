@@ -3,7 +3,7 @@ import json
 from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
 
-from virtual_assistant_chain.chains.chat.chat import ChatConversation
+from virtual_assistant.chains.chat.chat import ChatConversation
 from ..callbacks.streaming_queue import StreamingWebsocketCallbackHandler
 from ..models.chat_message import ChatMessage
 from ..models.conversation import Conversation
