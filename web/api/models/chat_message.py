@@ -11,8 +11,8 @@ class ChatMessage(TimestampedModel):
         AI = 'AI'
         Human = 'Human'
 
-    sender = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    chat_session = models.ForeignKey(Conversation, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    conversation = models.ForeignKey(Conversation, on_delete=models.CASCADE)
 
     message = models.TextField()
     message_role = models.CharField(max_length=255, choices=MessageRole.choices)
@@ -20,4 +20,4 @@ class ChatMessage(TimestampedModel):
 
     class Meta:
         db_table = 'chat_message'
-        ordering = ['-updated_at']
+        ordering = ['created_at']

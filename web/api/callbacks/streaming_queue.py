@@ -14,21 +14,30 @@ class StreamingWebsocketCallbackHandler(BaseCallbackHandler):
     def on_llm_start(
         self, serialized: Dict[str, Any], prompts: List[str], **kwargs: Any
     ) -> None:
-        print('start')
+        self.queue.put_nowait({
+            'type': 'llm_start',
+            'token': '',
+        })
         """Run when LLM starts running."""
 
     def on_llm_new_token(self, token: str, **kwargs: Any) -> None:
         """Run on new LLM token. Only available when streaming is enabled."""
         if token:
-            self.queue.put_nowait(token)
+            self.queue.put_nowait({
+                'type': 'llm_new_token',
+                'token': token,
+            })
 
     def on_llm_end(self, response: LLMResult, **kwargs: Any) -> None:
         """Run when LLM ends running."""
+        self.queue.put_nowait({
+            'type': 'llm_end',
+            'token': '',
+        })
 
     def on_llm_error(
         self, error: Union[Exception, KeyboardInterrupt], **kwargs: Any
     ) -> None:
-        print('llm error')
         """Run when LLM errors."""
 
     def on_chain_start(
