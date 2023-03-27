@@ -3,7 +3,7 @@ from langchain.callbacks.base import BaseCallbackHandler, CallbackManager
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.chains import ConversationChain
 from langchain.chat_models import ChatOpenAI
-from langchain.memory import ConversationBufferMemory
+from langchain.memory import ConversationBufferWindowMemory
 from langchain.prompts import (
     PromptTemplate,
     ChatPromptTemplate, 
@@ -25,7 +25,7 @@ class ChatConversation:
             HumanMessagePromptTemplate.from_template(human_message_template)
         ])
         llm = ChatOpenAI(streaming=True, temperature=0.5, max_tokens=2048, callback_manager=CallbackManager(callbacks), verbose=True)
-        memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
+        memory = ConversationBufferWindowMemory(memory_key="chat_history", k=5, return_messages=True)
         self.conversation_chain = ConversationChain(memory=memory, prompt=prompt, llm=llm)
 
     def chat(self, input: str) -> str:

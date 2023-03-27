@@ -9,10 +9,9 @@ from ..models.chat_message import ChatMessage
 from ..models.conversation import Conversation
 
 class ChatConsumer(AsyncWebsocketConsumer):
-    chat_chain: ChatConversation
     async def connect(self):
-        self.queue = asyncio.Queue()
-        self.chat_chain = ChatConversation(callbacks=[StreamingWebsocketCallbackHandler(queue=self.queue)])
+        self.conversation_chains = {}
+        self.conversation_queues = {}
         await self.accept()
 
     async def disconnect(self, close_code):
@@ -22,17 +21,26 @@ class ChatConsumer(AsyncWebsocketConsumer):
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
         conversation_id = text_data_json['conversation_id']
+        if conversation_id not in self.conversation_queues:
+            self.conversation_queues[conversation_id] = asyncio.Queue()
+
+        if conversation_id not in self.conversation_chains:
+            self.conversation_chains[conversation_id] = ChatConversation(callbacks=[StreamingWebsocketCallbackHandler(queue=self.conversation_queues[conversation_id])])
+
+        chain = self.conversation_chains.get(conversation_id)
         asyncio.create_task(self.handle_queue_message_task(conversation_id))
-        reply = self.chat_chain.chat(input=message)
+        reply = chain.chat(input=message)
         await self.save_message(message=message, reply=reply, conversation_id=conversation_id)
     
     async def handle_queue_message_task(self, conversation_id: str):
         while True:
-            info = await self.queue.get()
-            if info['type'] == 'llm_new_token':
-                await self.send(text_data=json.dumps({'conversation_id': conversation_id, 'msg_type': 'reply_new_token', 'token': info['token']}))
-            elif info['type'] == 'llm_end':
-                await self.send(text_data=json.dumps({'conversation_id': conversation_id, 'msg_type': 'reply_end', 'token': ''}))
+            for name, queue in self.conversation_queues.items():
+                if name == conversation_id:
+                    info = await queue.get()
+                    if info['type'] == 'llm_new_token':
+                        await self.send(text_data=json.dumps({'conversation_id': conversation_id, 'msg_type': 'reply_new_token', 'token': info['token']}))
+                    elif info['type'] == 'llm_end':
+                        await self.send(text_data=json.dumps({'conversation_id': conversation_id, 'msg_type': 'reply_end', 'token': ''}))
 
     @database_sync_to_async
     def save_message(self, message: str, reply: str, conversation_id: str):
