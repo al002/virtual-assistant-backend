@@ -2,7 +2,9 @@ from typing import Any, List
 from langchain.callbacks.base import BaseCallbackHandler, CallbackManager
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.chains import ConversationChain
+from langchain.agents import initialize_agent, Tool, AgentExecutor
 from langchain.chat_models import ChatOpenAI
+from langchain.utilities import PythonREPL
 from langchain.memory import ConversationBufferWindowMemory
 from langchain.prompts import (
     PromptTemplate,
@@ -12,10 +14,21 @@ from langchain.prompts import (
     HumanMessagePromptTemplate
 )
 
-from virtual_assistant.chains.chat.prompt import SYSTEM_MESSAGE_TEMPLATE, HUMAN_MESSAGE_TEMPLATE
-from virtual_assistant.chains.chat.chat_type_template import TYPE_TEMPLATES
+from virtual_assistant.chat.prompt import SYSTEM_MESSAGE_TEMPLATE, HUMAN_MESSAGE_TEMPLATE
+from virtual_assistant.chat.chat_type_template import TYPE_TEMPLATES
+
+python_repl = PythonREPL()
+
+tools = [
+    Tool(
+        name = "Python REPL",
+        func=python_repl.run,
+        description="useful for when you can answer questions from execute python code. the input to this should be valid python code."
+    ),
+]
 
 class ChatConversation:
+    # conversation_agent: AgentExecutor
     conversation_chain: ConversationChain
 
     def __init__(self, callbacks: List[BaseCallbackHandler] =[], system_message_template: str = SYSTEM_MESSAGE_TEMPLATE, human_message_template: str = HUMAN_MESSAGE_TEMPLATE):
@@ -26,10 +39,12 @@ class ChatConversation:
         ])
         llm = ChatOpenAI(streaming=True, temperature=0.5, max_tokens=2048, callback_manager=CallbackManager(callbacks), verbose=True)
         memory = ConversationBufferWindowMemory(memory_key="chat_history", k=5, return_messages=True)
+        # self.conversation_agent = initialize_agent(tools, llm, prompt=prompt, agent="chat-conversational-react-description", verbose=True, memory=memory) 
         self.conversation_chain = ConversationChain(memory=memory, prompt=prompt, llm=llm)
 
     def chat(self, input: str) -> str:
         return self.conversation_chain.predict(input=input)
+        # return self.conversation_agent.run(input)
 
     def chat_with_type(self, type: str, **kwargs: Any) -> str:
         if type not in TYPE_TEMPLATES:
