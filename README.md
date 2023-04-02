@@ -43,7 +43,7 @@ Now, the Django development server should be running at http://127.0.0.1:8000/.
 Our vision is to build an open-source personal AI assistant that utilizes the power of ChatGPT and other LLMs to improve the way people work, communicate, and interact with technology. Our main goals are:
 
 1. Develop a comprehensive workflow and toolchain to assist users in various tasks, such as programming, the way to interact with internet, and writing emails etc.
-2. **Chat with you own data**, indexing Notion, Github docs etc. make it more personal.
+2. **Chat with you own data**, indexing Notion, Github docs, and local files etc. make it more personal.
 3. Ensure privacy and security by implementing best practices and allowing users to host their instances.
 
 ## Acknowledgments
