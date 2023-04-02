@@ -5,15 +5,11 @@ from typing import Any, Dict, List, Union
 from langchain.callbacks.base import BaseCallbackHandler
 from langchain.schema import AgentAction, AgentFinish, LLMResult
 
-class StreamingWebsocketCallbackHandler(BaseCallbackHandler):
+class StreamingChatMessageCallbackHandler(BaseCallbackHandler):
     """Callback handler for streaming. Only works with LLMs that support streaming."""
 
     def __init__(self, queue):
         self.queue = queue
-        self.buffer = ""
-        self.printing_action_input = False
-        self.action_detected = False
-        self.bracket_after_quote = False
 
     def on_llm_start(
         self, serialized: Dict[str, Any], prompts: List[str], **kwargs: Any
@@ -34,10 +30,6 @@ class StreamingWebsocketCallbackHandler(BaseCallbackHandler):
 
     def on_llm_end(self, response: LLMResult, **kwargs: Any) -> None:
         """Run when LLM ends running."""
-        self.buffer = ""
-        self.printing_action_input = False
-        self.action_detected = False
-        self.bracket_after_quote = False
         self.queue.put_nowait({
             'type': 'llm_end',
             'token': '',
@@ -54,6 +46,11 @@ class StreamingWebsocketCallbackHandler(BaseCallbackHandler):
         """Run when chain starts running."""
 
     def on_chain_end(self, outputs: Dict[str, Any], **kwargs: Any) -> None:
+        print('chain end')
+        self.queue.put_nowait({
+            'type': 'llm_new_token',
+            'token': outputs['output'],
+        })
         """Run when chain ends running."""
 
     def on_chain_error(

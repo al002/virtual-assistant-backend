@@ -4,7 +4,8 @@ from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
 
 from virtual_assistant.chat.chat import ChatConversation
-from ..callbacks.streaming_queue import StreamingWebsocketCallbackHandler
+# from virtual_assistant.latest_chat.base import ChatConversation
+from ..callbacks.streaming_chat_message import StreamingChatMessageCallbackHandler
 from ..models.chat_message import ChatMessage
 from ..models.conversation import Conversation
 
@@ -25,7 +26,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             self.conversation_queues[conversation_id] = asyncio.Queue()
 
         if conversation_id not in self.conversation_chains:
-            self.conversation_chains[conversation_id] = ChatConversation(callbacks=[StreamingWebsocketCallbackHandler(queue=self.conversation_queues[conversation_id])])
+            self.conversation_chains[conversation_id] = ChatConversation(callbacks=[StreamingChatMessageCallbackHandler(queue=self.conversation_queues[conversation_id])])
 
         chain = self.conversation_chains.get(conversation_id)
         asyncio.create_task(self.handle_queue_message_task(conversation_id))
