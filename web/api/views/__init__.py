@@ -2,3 +2,4 @@
 from .login import login_view
 from .conversation_view import ConversationListCreateAPIView, ConversationRetrieveUpdateDestroyAPIView
 from .chat_message_view import ChatMessageListAPIView, ChatMessageDestroyAPIView
+from .document_view import DocumentListCreateAPIView, DocumentRetrieveUpdateDestroyAPIView

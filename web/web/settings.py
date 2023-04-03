@@ -158,3 +158,8 @@ CHANNEL_LAYERS = {
         'BACKEND': 'channels.layers.InMemoryChannelLayer',
     },
 }
+
+CELERY_CONFIG = {
+    "broker_url": "redis://localhost:6379",
+    "result_backend": "redis://localhost:6379",
+}
