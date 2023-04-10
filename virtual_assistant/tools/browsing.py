@@ -1,10 +1,9 @@
 from langchain.tools import BaseTool
 from langchain.document_loaders import WebBaseLoader
 from langchain.text_splitter import CharacterTextSplitter
-from langchain.embeddings import OpenAIEmbeddings
-from langchain.vectorstores import Milvus
 
-from  virtual_assistant.utilities import GoogleSerperAPIWrapper 
+from virtual_assistant.utilities import GoogleSerperAPIWrapper 
+from virtual_assistant.utilities import milvus_client
 
 class BrowsingTool(BaseTool):
     serper: GoogleSerperAPIWrapper
@@ -47,15 +46,9 @@ class BrowsingTool(BaseTool):
         text_splitter = CharacterTextSplitter(chunk_size=3000, chunk_overlap=50)
         docs = text_splitter.split_documents(documents)
         
-        embeddings = OpenAIEmbeddings()
+        milvus_client.from_documents(docs)
 
-        db = Milvus.from_documents(
-            docs,
-            embeddings,
-            connection_args={"host": "127.0.0.1", "port": "19530"},
-        )
-        retriever = db.as_retriever()
-        results =  retriever.get_relevant_documents(query)
+        results = milvus_client.as_retriever().get_relevant_documents(query)
 
         if len(results) > 0:
             return results[0].page_content

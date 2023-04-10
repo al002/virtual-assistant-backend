@@ -1,9 +1,9 @@
 from langchain.document_loaders import WebBaseLoader
-from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.text_splitter import CharacterTextSplitter
-from langchain.vectorstores import Milvus
 from celery.exceptions import MaxRetriesExceededError
 from web.celery import app
+
+from virtual_assistant.utilities import milvus_client
 
 from ..models import Document
 from ..models.document import IndexingStatus
@@ -13,20 +13,13 @@ def index_document(doc_id, doc_type, file_path):
     document.indexing_status = IndexingStatus.INDEXING
     document.save()
 
-    embeddings = OpenAIEmbeddings()
-
     if doc_type == 'url':
         loader = WebBaseLoader([file_path])
         documents = loader.load()
         text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
         docs = text_splitter.split_documents(documents)
 
-        Milvus.from_documents(
-            docs,
-            embeddings,
-            connection_args={"host": "127.0.0.1", "port": "19530"},
-        )
-
+        milvus_client.from_documents(docs)
 
     document.indexing_status = IndexingStatus.SUCCESS
     document.save()
