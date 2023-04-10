@@ -46,9 +46,9 @@ class BrowsingTool(BaseTool):
         text_splitter = CharacterTextSplitter(chunk_size=3000, chunk_overlap=50)
         docs = text_splitter.split_documents(documents)
         
-        milvus_client.from_documents(docs)
+        db = milvus_client.from_documents(docs)
 
-        results = milvus_client.as_retriever().get_relevant_documents(query)
+        results = db.as_retriever().get_relevant_documents(query)
 
         if len(results) > 0:
             return results[0].page_content
