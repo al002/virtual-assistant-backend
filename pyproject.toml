@@ -1,10 +1,10 @@
 [tool.poetry]
-name = "virtual-assistant-chain"
+name = "virtual-assistant-backend"
 version = "0.0.0"
 description = ""
 authors = ["al002 <al002@disroot.org>"]
 readme = "README.md"
-packages = [{include = "virtual_assistant_chain"}]
+packages = [{include = "virtual_assistant"}]
 
 [tool.poetry.dependencies]
 python = "~3.9.16"
