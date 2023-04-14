@@ -1,9 +1,10 @@
 from langchain.tools import BaseTool
 from langchain.document_loaders import WebBaseLoader
 from langchain.text_splitter import CharacterTextSplitter
+from langchain.vectorstores import Pinecone
+from langchain.embeddings import OpenAIEmbeddings
 
-from virtual_assistant.utilities import GoogleSerperAPIWrapper 
-from virtual_assistant.utilities import milvus_client
+from virtual_assistant.utilities import GoogleSerperAPIWrapper, PINECONE_INDEX_NAME
 
 class BrowsingTool(BaseTool):
     serper: GoogleSerperAPIWrapper
@@ -43,10 +44,12 @@ class BrowsingTool(BaseTool):
         loader = WebBaseLoader(links)
         documents = loader.load()
 
+        embedding = OpenAIEmbeddings()
+
         text_splitter = CharacterTextSplitter(chunk_size=3000, chunk_overlap=50)
         docs = text_splitter.split_documents(documents)
-        
-        db = milvus_client.from_documents(docs)
+
+        db = Pinecone.from_documents(index_name=PINECONE_INDEX_NAME, embedding=embedding, documents=docs)
 
         results = db.as_retriever().get_relevant_documents(query)
 

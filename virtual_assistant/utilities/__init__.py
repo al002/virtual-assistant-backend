@@ -1,7 +1,8 @@
 from .google_serper import GoogleSerperAPIWrapper
-from .milvus_client import milvus_client
+from .pinecone_client import initialize_pinecone, PINECONE_INDEX_NAME
 
 __all__ = [
     'GoogleSerperAPIWrapper',
-    'milvus_client',
+    'initialize_pinecone',
+    'PINECONE_INDEX_NAME',
 ]
