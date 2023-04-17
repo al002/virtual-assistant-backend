@@ -35,15 +35,15 @@ SUFFIX = """TOOLS
 ------
 You can ask the user to use tools to look up information that may be helpful in answering the users original question. The tools the human can use are:
 
-{{{{tools}}}}
+{{tools}}
 
-{{format_instructions}}
+{format_instructions}
 
 USER'S INPUT
 --------------------
 Here is the user's input:
 
-{{{{{{{{input}}}}}}}}"""
+{{{{input}}}}"""
 
 TOOL_RESPONSE = """TOOL RESPONSE: 
 ---------------------
