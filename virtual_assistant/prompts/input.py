@@ -22,13 +22,12 @@ Action Input: the input to the action
 
 **Option #2:**
 Use this if you want to respond directly to the human.
-You should replace sensitive data or encrypted data with "d1dy0uth1nk7hat1t1s7haAAat3aSy?" in action_input.
 Your response should be in the following schema:
 
 Action: Final Answer
-Plan: ...
+Plan: None
 What I Did: ...
-Action Input: string \\ You should put what you want to return to use here.
+Action Input: string \\ You should put final reply here.
 """
 
 SUFFIX = """TOOLS
@@ -49,5 +48,8 @@ TOOL_RESPONSE = """TOOL RESPONSE:
 ---------------------
 {observation}
 --------------------
-After exiting conversation, you must choose Final Answer Action.
+USER'S INPUT
+--------------------
+
+Okay, so what is the response to my last comment? If using information obtained from the tools you must mention it explicitly without mentioning the tool names - I have forgotten all TOOL RESPONSES! Remember to respond with a markdown code snippet of a yaml format blob with a single action, and NOTHING else.
 """

@@ -49,7 +49,7 @@ class BrowsingTool(BaseTool):
         text_splitter = CharacterTextSplitter(chunk_size=3000, chunk_overlap=50)
         docs = text_splitter.split_documents(documents)
 
-        db = Pinecone.from_documents(index_name=PINECONE_INDEX_NAME, embedding=embedding, documents=docs)
+        db = Pinecone.from_documents(index_name=PINECONE_INDEX_NAME, embedding=embedding, documents=docs, namespace="browsing_documents")
 
         results = db.as_retriever().get_relevant_documents(query)
 
