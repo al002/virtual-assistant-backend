@@ -27,12 +27,15 @@ class AgentManager:
         retriever = db.as_retriever()
         tools = [RetrivalTool(retriver=retriever), BrowsingTool(serper=GoogleSerperAPIWrapper())]
 
-        return AgentExecutor.from_agent_and_tools(
+        executor = AgentExecutor.from_agent_and_tools(
             agent=self.agent,
             tools=tools,
             memory=memory,
             verbose=True,
         )
+
+        self.executors[key] = executor
+        return executor
 
     def get_or_create_executor(self, key: str) -> AgentExecutor:
         if not (key in self.executors):
