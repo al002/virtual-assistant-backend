@@ -5,9 +5,9 @@ from langchain.agents import initialize_agent, load_tools, AgentExecutor
 from langchain.chat_models import ChatOpenAI
 from langchain.memory import ConversationBufferWindowMemory
 from langchain.prompts import (
-    ChatPromptTemplate, 
-    MessagesPlaceholder, 
-    SystemMessagePromptTemplate, 
+    ChatPromptTemplate,
+    MessagesPlaceholder,
+    SystemMessagePromptTemplate,
     HumanMessagePromptTemplate
 )
 
@@ -41,6 +41,6 @@ class LatestChatConversation:
         return self.conversation_agent.run(input)
 
 if __name__ == "__main__":
-    chat = ChatConversation()
+    chat = LatestChatConversation()
     resp1 = chat.chat(input='Oscar best movie in 2023')
     print(resp1)
