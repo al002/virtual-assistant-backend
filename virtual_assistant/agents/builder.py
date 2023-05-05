@@ -73,7 +73,7 @@ class AgentBuilder:
                 *self.global_tools,
                 *self.tools,
             ],
-            # system_message=PREFIX,
-            # human_message=SUFFIX,
-            # output_parser=self.parser,
+            system_message=PREFIX,
+            human_message=SUFFIX,
+            output_parser=self.parser,
         )

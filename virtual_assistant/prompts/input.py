@@ -9,7 +9,7 @@ Overall, Assistant is a powerful system that can help with a wide range of tasks
 FORMAT_INSTRUCTIONS = """RESPONSE FORMAT INSTRUCTIONS
 ----------------------------
 
-When responding to me please, please output a response in one of two yaml formats, response must be a valid yaml. No explanation is allowed after action input.:
+When responding to me please, please output a response in one of two formats, response must be a same format as below, do not return json format. No explanation is allowed after action input.:
 
 **Option #1:**
 Use this if you want the human to use a tool.
