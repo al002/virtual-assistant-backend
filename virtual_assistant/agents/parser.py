@@ -1,11 +1,11 @@
 import re
 from typing import Dict
 
-from  langchain.schema import BaseOutputParser
+from  langchain.agents import AgentOutputParser
 
 from virtual_assistant.prompts.input import FORMAT_INSTRUCTIONS
 
-class TaskOutputParser(BaseOutputParser):
+class TaskOutputParser(AgentOutputParser):
     @staticmethod
     def parse_all(text: str) -> Dict[str, str]:
         regex = r"Action: (.*?)[\n]Plan:(.*)[\n]What I Did:(.*)[\n]Action Input: (.*)"

@@ -34,6 +34,7 @@ class AgentManager:
 
         builder.build_llm(callback_manager)
         builder.build_global_tools()
+        builder.build_parser()
 
         memory: BaseChatMemory = self.get_or_create_memory(key)
 

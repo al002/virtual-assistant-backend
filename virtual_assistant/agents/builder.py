@@ -3,11 +3,11 @@ from langchain.chat_models.openai import ChatOpenAI
 from langchain.schema import BaseOutputParser
 from langchain.callbacks.base import BaseCallbackManager
 from langchain.agents.tools import BaseTool
-from langchain.agents import load_tools
+from langchain.agents import load_tools, ConversationalChatAgent
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.vectorstores import Pinecone
 
-from .chat_agent import ConversationalChatAgent
+# from .chat_agent import ConversationalChatAgent
 from .parser import TaskOutputParser
 from ..prompts.input import PREFIX, SUFFIX
 
@@ -73,8 +73,7 @@ class AgentBuilder:
                 *self.global_tools,
                 *self.tools,
             ],
-            system_message=PREFIX,
-            human_message=SUFFIX,
-            output_parser=self.parser,
-            max_iterations=30,
+            # system_message=PREFIX,
+            # human_message=SUFFIX,
+            # output_parser=self.parser,
         )
