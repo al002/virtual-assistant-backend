@@ -13,10 +13,10 @@ from langchain.prompts.chat import (
     MessagesPlaceholder,
     SystemMessagePromptTemplate,
 )
+from langchain.base_language import BaseLanguageModel
 from langchain.schema import (
     AgentAction,
     AIMessage,
-    BaseLanguageModel,
     BaseMessage,
     BaseOutputParser,
     HumanMessage,
@@ -58,7 +58,7 @@ class ConversationalChatAgent(Agent):
             [f"> {tool.name}: {tool.description}" for tool in tools]
         )
         tool_names = ", ".join([tool.name for tool in tools])
-        _output_parser = output_parser or TaskOutputParser()
+        _output_parser = output_parser or cls._get_default_output_parser()
         format_instructions = human_message.format(
             format_instructions=_output_parser.get_format_instructions()
         )
@@ -74,6 +74,10 @@ class ConversationalChatAgent(Agent):
             MessagesPlaceholder(variable_name="agent_scratchpad"),
         ]
         return ChatPromptTemplate(input_variables=input_variables, messages=messages)
+
+    @classmethod
+    def _get_default_output_parser(cls, **kwargs: Any) -> BaseOutputParser:
+        return TaskOutputParser()
 
     def _extract_tool_and_input(self, llm_output: str) -> Optional[Tuple[str, str]]:
         try:
@@ -109,7 +113,7 @@ class ConversationalChatAgent(Agent):
     ) -> Agent:
         """Construct an agent from an LLM and tools."""
         cls._validate_tools(tools)
-        _output_parser = output_parser or TaskOutputParser()
+        _output_parser = output_parser or cls._get_default_output_parser()
         prompt = cls.create_prompt(
             tools,
             system_message=system_message,
